@@ -5,5 +5,8 @@ public class home extends iphoneUpi{
         System.out.println("trang chủ đẹp");
         System.out.println("trang chưa đẹp");
 
+
+        System.out.println("trang chủ đẹp");
+        System.out.println("trang chưa đẹp");
     }
 }
