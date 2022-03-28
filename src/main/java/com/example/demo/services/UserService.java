@@ -28,6 +28,7 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
+
     // cập nhật thông tin post
     //cách1
     public ResponseEntity<?> create(UserEntity userEntity) {
@@ -159,5 +160,11 @@ public class UserService {
 
 //    public ResponseEntity<List<UserEntity>> findAllById(long id) {
 //        return null;
+//    }
+
+    // jwt tokem
+//    public String findalll(){
+//          UserEntity userEntity =userRepository.findAllBy();
+//        return rjwtMappers.createToken(userEntity.getName(), userEntity.getEmail(), userEntity.getAge(), userEntity.getPassWord(), new String[]{"CUSTOMER"});
 //    }
 }

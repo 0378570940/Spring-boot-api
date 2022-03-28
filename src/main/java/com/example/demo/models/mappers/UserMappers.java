@@ -22,6 +22,14 @@ public class UserMappers {
         SpringApplication.run(UserMappers.class, args);
     }
 
+    public static UserIn userToPrincipal(UserEntity userEntity) {
+        UserIn userIn = new UserIn();
+        userIn.setName(userEntity.getName());
+        userIn.setEmail(userEntity.getEmail());
+        userIn.setAge(userEntity.getAge());
+        return userIn;
+    }
+
     public UserEntity toUserDto(UserEntity userEntity) {
         UserDto userDto = new UserDto();
         userDto.setAge(userEntity.getAge());

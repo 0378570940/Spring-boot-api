@@ -1,21 +1,11 @@
-package com.example.demo.models.ins;
+package com.example.demo.models.out;
 
-import java.util.Date;
-
-public class UserIn {
-    private int age;
+public class LoginOut {
     private String name;
-    private String email;
     private String password;
+    private String email;
 
-    public UserIn() {
-    }
-
-    public UserIn(int age, String name, String email, String password) {
-        this.age = age;
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    public LoginOut() {
     }
 
     public String getPassword() {
@@ -26,12 +16,10 @@ public class UserIn {
         this.password = password;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public LoginOut(String name, String password, String email) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
     }
 
     public String getName() {

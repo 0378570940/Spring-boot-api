@@ -1,6 +1,8 @@
 package com.example.demo.entitys;
 
 import javax.persistence.*;
+import java.io.File;
+import java.net.URI;
 import java.util.Iterator;
 
 @Entity
@@ -13,16 +15,24 @@ public class UserEntity {
     private int age;
     @Column(name = "name")
     private String name;
-    @Column(name = "passWord")
-    private String passWord;
+    @Column(name = "password")
+    private String password;
     @Column(name = "email")
     private String email;
+    @Column(name = "img")
+    @Lob
+    private byte[] img;
 
     public UserEntity() {
     }
 
-    public static void remove() {
-
+    public UserEntity(long id, int age, String name, String password, String email, byte[] img) {
+        this.id = id;
+        this.age = age;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.img = img;
     }
 
     public long getId() {
@@ -50,11 +60,11 @@ public class UserEntity {
     }
 
     public String getPassWord() {
-        return passWord;
+        return password;
     }
 
     public void setPassWord(String passWord) {
-        this.passWord = passWord;
+        this.password = passWord;
     }
 
     public String getEmail() {
@@ -65,11 +75,19 @@ public class UserEntity {
         this.email = email;
     }
 
-    public Iterator<UserEntity> iterator() {
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
+
+    public File getFile() {
         return null;
     }
 
-    public UserEntity orElse(Object o) {
+    public String getFilename() {
         return null;
     }
 }
