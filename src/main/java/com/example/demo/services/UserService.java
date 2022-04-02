@@ -45,14 +45,14 @@ public class UserService {
 
     // sâu toàn bộ thông tin get
     //cách1
-    public ResponseEntity<?> finaAll() {
-
-        List<UserEntity> userEntityList = userRepository.findAll();
-        List<UserDto> userDto = userEntityList.stream()
-                .map(post -> modelMapper.map(post, UserDto.class))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
-    }
+//    public ResponseEntity<?> finaAll() {
+//
+//        List<UserEntity> userEntityList = userRepository.findAll();
+//        List<UserDto> userDto = userEntityList.stream()
+//                .map(post -> modelMapper.map(post, UserDto.class))
+//                .collect(Collectors.toList());
+//        return new ResponseEntity<>(userDto, HttpStatus.OK);
+//    }
     //cách 2
 //    public ReponseData findAll(){
 //        ReponseData reponseData = new ReponseData();

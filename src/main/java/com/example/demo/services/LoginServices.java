@@ -1,21 +1,26 @@
 package com.example.demo.services;
 
+import com.example.demo.config.Constant;
 import com.example.demo.entitys.UserEntity;
+import com.example.demo.models.dto.HeaderDto;
+import com.example.demo.models.dto.ReponseData;
+import com.example.demo.models.dto.UserDto;
+import com.example.demo.models.ins.HeaderIn;
 import com.example.demo.models.ins.LoginIn;
+import com.example.demo.models.mappers.LoginMappers;
+import com.example.demo.models.mappers.UserMappers;
 import com.example.demo.provider.JwtLogin;
-import com.example.demo.provider.SimpleGrantedAuthority;
 import com.example.demo.repositories.LoginRepositories;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.mysql.cj.exceptions.PasswordExpiredException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.net.HttpCookie;
 import java.util.Date;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class LoginServices {
@@ -23,44 +28,50 @@ public class LoginServices {
     private LoginRepositories loginRepositories;
     @Autowired
     private JwtLogin jwtLogin;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    private LoginMappers loginMapper;
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
+    private UserMappers mappers;
 
-    public ResponseEntity<?> signIn(LoginIn loginIn){
+    public UserDto signIn(LoginIn loginIn) {
         UserEntity userEntity = loginRepositories.findFirstByName(loginIn.getName());
-        String token = jwtLogin.createLoginToken(userEntity);
-        return new ResponseEntity<>(token,HttpStatus.OK);
+        if (userEntity == null) throw new PasswordExpiredException("Không tim thấ user");
+        if (!loginIn.getPassword().equals(userEntity.getPassWord())) {
+            throw new PasswordExpiredException("Mặt khẩu không tồn tại");
+        }
+        UserDto userDto = new UserDto();
+        userEntity = loginMapper.loginMapper(userEntity, userDto);
+        String token = jwtLogin.generateJwtToken(userEntity);
+        userDto.setToken(token);
+        return userDto;
     }
 
-
-//    public ResponseEntity<?> signin(LoginIn loginIn) {
-//        UserEntity userEntity = loginRepositories.findFirstByName(loginIn.getName());
-//        jwtLogin.createLoginToken(userEntity.getName(), userEntity.getEmail(), new String[]{});
-//        return new ResponseEntity<>(HttpStatus.OK);
+//    public UserDto loginHeader(JwtLogin jwtLogin) {
+//        UserEntity userEntity = loginRepositories.findFirstByToken();
+//        UserDto userDto = new UserDto();
+////        userEntity = loginMapper.loginMapper(userEntity, userDto);
+//        userDto.setName(userEntity.getName());
+//        String token1 = jwtLogin.parseToken(userEntity);
+//        userDto.setToken(token1);
+//        return userDto;
 //    }
 
+    public ResponseEntity<?> getUser(String token) {
+        String tokenId = jwtLogin.parseToken(token);
+        UserEntity userEntity = loginRepositories.findFirstById(Long.valueOf(tokenId));
+        HeaderDto headerDto = new HeaderDto();
+        loginMapper.tokenId(userEntity, headerDto);
+        String tokenCheck = jwtLogin.checkExpireToken(token);
+        headerDto.setStatus(tokenCheck);
+        String tokenCreate = jwtLogin.generateJwtToken(userEntity);
+        headerDto.setToken(tokenCreate);
+        Date tokenExpire = jwtLogin.expireToken(token);
+        headerDto.setExpire_date(tokenExpire);
+        return new ResponseEntity<>(headerDto, HttpStatus.OK);
+    }
 
-
-//    public String createLoginToken(String name, String email, String[] LoginIns){
-//        String KEY = "1234567890";
-//        Claims claims = Jwts.claims().setSubject(name);
-//        claims.put("LoginIns", Stream.of(LoginIns)
-//                .map(s -> new SimpleGrantedAuthority(s)).collect(Collectors.toList()));
-//        Date dta = new Date();
-//        String token = Jwts.builder()
-//                .setClaims(claims)
-//                .setIssuedAt(dta)
-//                .setExpiration(new Date(dta.getTime() + 115 * 60 * 1000))
-//                .signWith(SignatureAlgorithm.HS256,KEY)
-//                .compact();
-//        return token;
-//    }
-
-//    public String signin(String name, String password) {
-//        String token = jwtLogin.createLoginToken(name);
-//        LoginIn loginIn =new LoginIn();
-//        loginIn.setUser(name);
-//        loginIn.setToken();
-//        UserEntity userEntity = loginRepositories.findFirstByName(name);
-//        return jwtLogin.createLoginToken(userEntity.getName(), userEntity.getEmail(), new String[]{});
-////        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 }
