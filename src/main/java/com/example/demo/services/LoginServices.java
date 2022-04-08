@@ -1,14 +1,13 @@
 package com.example.demo.services;
 
-import com.example.demo.config.Constant;
 import com.example.demo.entitys.UserEntity;
-import com.example.demo.models.dto.HeaderDto;
+import com.example.demo.models.bo.ResultBo;
 import com.example.demo.models.dto.ReponseData;
 import com.example.demo.models.dto.UserDto;
-import com.example.demo.models.ins.HeaderIn;
 import com.example.demo.models.ins.LoginIn;
 import com.example.demo.models.mappers.LoginMappers;
 import com.example.demo.models.mappers.UserMappers;
+import com.example.demo.models.out.UserLoginOut;
 import com.example.demo.provider.JwtLogin;
 import com.example.demo.repositories.LoginRepositories;
 import com.mysql.cj.exceptions.PasswordExpiredException;
@@ -19,8 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.net.HttpCookie;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class LoginServices {
@@ -50,28 +49,37 @@ public class LoginServices {
         return userDto;
     }
 
-//    public UserDto loginHeader(JwtLogin jwtLogin) {
-//        UserEntity userEntity = loginRepositories.findFirstByToken();
-//        UserDto userDto = new UserDto();
-////        userEntity = loginMapper.loginMapper(userEntity, userDto);
-//        userDto.setName(userEntity.getName());
-//        String token1 = jwtLogin.parseToken(userEntity);
-//        userDto.setToken(token1);
-//        return userDto;
-//    }
-
     public ResponseEntity<?> getUser(String token) {
-        String tokenId = jwtLogin.parseToken(token);
-        UserEntity userEntity = loginRepositories.findFirstById(Long.valueOf(tokenId));
-        HeaderDto headerDto = new HeaderDto();
-        loginMapper.tokenId(userEntity, headerDto);
-        String tokenCheck = jwtLogin.checkExpireToken(token);
-        headerDto.setStatus(tokenCheck);
-        String tokenCreate = jwtLogin.generateJwtToken(userEntity);
-        headerDto.setToken(tokenCreate);
-        Date tokenExpire = jwtLogin.expireToken(token);
-        headerDto.setExpire_date(tokenExpire);
-        return new ResponseEntity<>(headerDto, HttpStatus.OK);
+        long userId = Long.parseLong(jwtLogin.parseToken(token));
+        UserEntity userEntity = loginRepositories.findById(userId);
+        UserLoginOut userLoginOut = new UserLoginOut();
+        loginMapper.tokenId(userEntity, userLoginOut);
+        return new ResponseEntity<>(userLoginOut, HttpStatus.OK);
     }
+
+    public Object verifyToken(String token) {
+//        UserEntity userEntity = loginRepositories.findById(Long.parseLong(token));
+        long userId = Long.parseLong(jwtLogin.parseToken(token));
+        UserEntity userEntity = loginRepositories.findById(userId);
+        UserLoginOut userLoginOut = new UserLoginOut();
+        if (userEntity == null) return false;
+        if (userEntity.getStatus() == ResultBo.Status.ACTIVE.name()) return false;
+        if (pressedDate().before(userEntity.getExpire_date())) return false;
+        loginMapper.tokenId(userEntity, userLoginOut);
+        return userLoginOut;
+    }
+
+    private ReponseData pressedDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate now = LocalDate.now();
+        return new ReponseData(dtf.format(now));
+    }
+
+    public String pressedDate(String date) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(date);
+        LocalDate now = LocalDate.now();
+        return dtf.format(now);
+    }
+
 
 }
