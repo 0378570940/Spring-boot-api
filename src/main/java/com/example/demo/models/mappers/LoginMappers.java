@@ -35,10 +35,4 @@ public class LoginMappers {
         userInOut.setWork(userEntity.getWork());
         return userInOut;
     }
-
-//    public UserEntity createToken(UserEntity userEntity) {
-//        HeaderDto headerDto = new HeaderDto();
-//        headerDto.setToken(userEntity.getToken());
-//        return userEntity;
-//    }
 }

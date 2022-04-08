@@ -17,6 +17,7 @@ public class UserDto {
     public UserDto(String wrong_username_or_password, HttpStatus forbidden) {
 
     }
+
     public UserDto(long id, int age, String name, String email, String password, String token) {
         this.id = id;
         this.age = age;

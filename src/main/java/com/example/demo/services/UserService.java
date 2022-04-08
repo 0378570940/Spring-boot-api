@@ -13,9 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class UserService {
 
@@ -35,13 +32,7 @@ public class UserService {
         UserEntity userEntity1 = mappers.toUserDto(userRepository.save(userEntity));
         return new ResponseEntity<>(userEntity1, HttpStatus.OK);
     }
-    //cách2
-//    public ReponseData create(UserEntity userEntity) {
-//        ReponseData reponseData = new ReponseData();
-//        reponseData.setMsg("Success");
-//        reponseData.setData(userRepository.save(userEntity));
-//        return reponseData;
-//    }
+
 
     // sâu toàn bộ thông tin get
     //cách1
@@ -52,22 +43,6 @@ public class UserService {
 //                .map(post -> modelMapper.map(post, UserDto.class))
 //                .collect(Collectors.toList());
 //        return new ResponseEntity<>(userDto, HttpStatus.OK);
-//    }
-    //cách 2
-//    public ReponseData findAll(){
-//        ReponseData reponseData = new ReponseData();
-//        reponseData.setMsg("Success");
-//        reponseData.setData(userRepository.findAll());
-//        return reponseData;
-//    }
-    //cách3
-//    public List<UserDto> findAll() {
-//        List<UserEntity> userEntity = userRepository.findAllBy();
-//        List<UserDto> userDtoList = new ArrayList<>();
-//        for (UserEntity userEntity1 : userEntity) {
-//            userDtoList.add(UserMappers.toUserDto(userEntity1));
-//        }
-//        return userDtoList;
 //    }
 
 
@@ -80,30 +55,6 @@ public class UserService {
         UserDto userDto = modelMapper.map(userEntity, UserDto.class);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
-//    public ResponseEntity<?> finaById(long id) {
-//        UserEntity userEntity = userRepository.findAllById(id);
-//        if (userEntity == null)
-//        return new ResponseEntity<>("in ra không thành công",HttpStatus.NO_CONTENT);//
-//        userEntity = mappers.toUserDto(userEntity);
-//        userRepository.save(userEntity);
-//        return new ResponseEntity<>("in ra thông tin thành công", HttpStatus.OK);//Status code 200 (trả về thành công get)
-//    }
-    //cách2
-//    public ReponseData findAllBy(long id){
-//        ReponseData reponseData = new ReponseData();
-//        reponseData.setMsg("Success");
-//        reponseData.setData(userRepository.findAllById(id));
-//        return reponseData;
-//    }
-    //cách3
-//    public UserDto findAllBy(long id) {
-//        UserEntity userEntitys = userRepository.findAllById(id);
-//        if (userEntitys.getId() == id) {
-//            return UserMappers.toUserDto(userEntitys);
-//        }
-//        throw new NotFuondExcaption("không tông tại trong hệ thống");
-//    }
-
 
     //sửa thông tin put
     //cách1
@@ -119,31 +70,7 @@ public class UserService {
         userRepository.save(userEntity);
         return new ResponseEntity<>("cập nhật thành công", HttpStatus.OK);//Status code 200 (trả về thành công get)
     }
-    //cách2
-//    public UserOut update(long id, UserEntity userEntity) {
-//        UserEntity userEntitie = userRepository.findUserById(id);
-//        if (userEntitie != null) {
-//            userEntitie.setAge(userEntity.getAge());
-//            userEntitie.setEmail(userEntity.getEmail());
-//            userEntitie.setName(userEntity.getName());
-//            userRepository.save(userEntitie);
-//            return new UserOut(true, "update success");
-//        }
-//        return new UserOut(false, "user not exist");
-//    }
 
-    //xóa thông tin
-    //cách 1
-//    public ResponseEntity<?> delete(long id){
-//        try {
-//            userRepository.deleteAllById(id);
-//            return new ResponseEntity<>("không tồn tại bản ghi nào", HttpStatus.BAD_REQUEST);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return new ResponseEntity<>("xóa thành công", HttpStatus.OK);
-//        }
-//    }
-    //cách 2
     public ReponseData delete(long id) {
         try {
             userRepository.deleteById(id);
@@ -154,17 +81,5 @@ public class UserService {
         }
     }
 
-    public UserEntity getUserById(long id) {
-        return null;
-    }
 
-//    public ResponseEntity<List<UserEntity>> findAllById(long id) {
-//        return null;
-//    }
-
-    // jwt tokem
-//    public String findalll(){
-//          UserEntity userEntity =userRepository.findAllBy();
-//        return rjwtMappers.createToken(userEntity.getName(), userEntity.getEmail(), userEntity.getAge(), userEntity.getPassWord(), new String[]{"CUSTOMER"});
-//    }
 }

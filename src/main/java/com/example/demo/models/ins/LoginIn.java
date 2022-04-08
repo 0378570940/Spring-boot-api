@@ -3,6 +3,7 @@ package com.example.demo.models.ins;
 public class LoginIn {
     private String name;
     private String password;
+
     public LoginIn() {
     }
 

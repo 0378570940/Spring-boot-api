@@ -6,12 +6,10 @@ import com.example.demo.models.dto.ReponseData;
 import com.example.demo.models.dto.UserDto;
 import com.example.demo.models.ins.LoginIn;
 import com.example.demo.models.mappers.LoginMappers;
-import com.example.demo.models.mappers.UserMappers;
 import com.example.demo.models.out.UserLoginOut;
 import com.example.demo.provider.JwtLogin;
 import com.example.demo.repositories.LoginRepositories;
 import com.mysql.cj.exceptions.PasswordExpiredException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +29,6 @@ public class LoginServices {
     PasswordEncoder passwordEncoder;
     @Autowired
     private LoginMappers loginMapper;
-    @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private UserMappers mappers;
 
     public UserDto signIn(LoginIn loginIn) {
         UserEntity userEntity = loginRepositories.findFirstByName(loginIn.getName());

@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.mysql.cj.exceptions.PasswordExpiredException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -28,6 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("**")
-                    .permitAll();
+                .permitAll();
     }
 }

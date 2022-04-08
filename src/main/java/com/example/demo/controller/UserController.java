@@ -20,19 +20,11 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody UserEntity userEntity) {
         return userService.create(userEntity);
     }
-    //cachs 2
-//    public ReponseData createUser(@RequestBody UserEntity userEntity) {
-//        return userService.create(userEntity);
-//    }
 
 //    @GetMapping("/user")
 //    //cách1
 //    public ResponseEntity<?> finaAll() {
 //        return userService.finaAll();
-//    }
-    //cách 2
-//    public ReponseData getUser(){
-//        return userService.findAll();
 //    }
 
     @GetMapping("/user/{id}")
@@ -40,10 +32,6 @@ public class UserController {
     public ResponseEntity<?> getUserId(@PathVariable long id) {
         return userService.finaById(id);
     }
-    //cách 2
-//    public ReponseData getUserId(@PathVariable long id) {
-//        return userService.findAllBy(id);
-//    }
 
     @PutMapping("/user/{id}")
     public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody UserIn userIn) {
@@ -51,10 +39,6 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    //cách 1
-//    public ResponseEntity<?> delete(@PathVariable long id){
-//        return userService.delete(id);
-//    }
     //cách 2
     public ResponseEntity<ReponseData> delete(@PathVariable long id) {
         ReponseData reponseData = userService.delete(id);

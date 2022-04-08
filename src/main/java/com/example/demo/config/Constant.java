@@ -1,8 +1,5 @@
 package com.example.demo.config;
 
-import lombok.Data;
-import org.springframework.http.HttpStatus;
-
 public class Constant {
 
     public enum MetaData {
