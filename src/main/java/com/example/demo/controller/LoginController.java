@@ -17,7 +17,23 @@ public class LoginController {
 //    }
 
     @PostMapping("/signIn")
-    public ResponseEntity<?> signIn(@RequestBody LoginIn loginIn){
-        return loginServices.signIn(loginIn);
+    public Object signIn(@RequestBody LoginIn loginIn){
+        try {
+            return loginServices.signIn(loginIn);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUser(@RequestHeader(name = "Authorization") String token){
+//        System.out.println(token);
+        return loginServices.getUser(token);
+    }
+
+    @GetMapping("/users")
+    public Object verifyToken(@RequestHeader(name = "Authorization") String token){
+//        System.out.println(token);
+        return loginServices.verifyToken(token);
     }
 }

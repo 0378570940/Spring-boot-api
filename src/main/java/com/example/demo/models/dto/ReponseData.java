@@ -11,4 +11,12 @@ public class ReponseData {
     private int code;
     private String msg;
     private Object data;
+
+    public ReponseData(String format) {
+
+    }
+
+    public boolean before(String expire_date) {
+        return false;
+    }
 }

@@ -1,21 +1,35 @@
 package com.example.demo.models.dto;
 
-import javax.persistence.Column;
+import org.springframework.http.HttpStatus;
+
+import java.util.Date;
 
 public class UserDto {
     private long id;
     private int age;
     private String name;
     private String email;
+    private String token;
 
     public UserDto() {
     }
 
-    public UserDto(long id, int age, String name, String email) {
+    public UserDto(String wrong_username_or_password, HttpStatus forbidden) {
+
+    }
+    public UserDto(long id, int age, String name, String email, String password, String token) {
         this.id = id;
         this.age = age;
         this.name = name;
         this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public UserDto(String email, long id, String name, int age) {
@@ -52,5 +66,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserDto orElseThrow(Object o) {
+        return null;
+    }
+
+    public void setId(String token1) {
+
     }
 }

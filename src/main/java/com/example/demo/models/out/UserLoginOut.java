@@ -1,37 +1,102 @@
 package com.example.demo.models.out;
 
-public class UserInOut {
+import javax.persistence.Column;
+
+public class UserLoginOut {
     private long id;
     private int age;
     private String name;
     private String email;
-    private String expire_date;
-    private String token;
+    private String interest;
+    private String Driver;
+    private String gender;
+    private String hometown;
+    private String facebook;
+    private String SDT;
+    private String Dateofbirth;
+    private String maritalstatus;
+    private String Work;
 
-    public String getToken() {
-        return token;
+    public String getGender() {
+        return gender;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public String getExpire_date() {
-        return expire_date;
+    public String getHometown() {
+        return hometown;
     }
 
-    public void setExpire_date(String expire_date) {
-        this.expire_date = expire_date;
+    public void setHometown(String hometown) {
+        this.hometown = hometown;
     }
 
-    public UserInOut() {
+    public String getFacebook() {
+        return facebook;
     }
 
-    public UserInOut(long id, int age, String name, String email) {
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getSDT() {
+        return SDT;
+    }
+
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
+    }
+
+    public String getDateofbirth() {
+        return Dateofbirth;
+    }
+
+    public void setDateofbirth(String dateofbirth) {
+        Dateofbirth = dateofbirth;
+    }
+
+    public String getMaritalstatus() {
+        return maritalstatus;
+    }
+
+    public void setMaritalstatus(String maritalstatus) {
+        this.maritalstatus = maritalstatus;
+    }
+
+    public String getWork() {
+        return Work;
+    }
+
+    public void setWork(String work) {
+        Work = work;
+    }
+
+    public UserLoginOut() {
+    }
+
+    public UserLoginOut(long id, int age, String name, String email) {
         this.id = id;
         this.age = age;
         this.name = name;
         this.email = email;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
+
+    public String getDriver() {
+        return Driver;
+    }
+
+    public void setDriver(String driver) {
+        Driver = driver;
     }
 
     public long getId() {

@@ -2,16 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.entitys.UserEntity;
 import com.example.demo.models.dto.ReponseData;
-import com.example.demo.models.dto.UserDto;
 import com.example.demo.models.ins.UserIn;
-import com.example.demo.models.out.UserOut;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -21,7 +17,7 @@ public class UserController {
 
     @PostMapping("/user")
     //cách1
-    public ResponseEntity<?> createUser(@RequestBody UserEntity userEntity){
+    public ResponseEntity<?> createUser(@RequestBody UserEntity userEntity) {
         return userService.create(userEntity);
     }
     //cachs 2
@@ -29,11 +25,11 @@ public class UserController {
 //        return userService.create(userEntity);
 //    }
 
-    @GetMapping("/user")
-    //cách1
-    public ResponseEntity<?> finaAll1(){
-        return userService.finaAll();
-    }
+//    @GetMapping("/user")
+//    //cách1
+//    public ResponseEntity<?> finaAll() {
+//        return userService.finaAll();
+//    }
     //cách 2
 //    public ReponseData getUser(){
 //        return userService.findAll();
@@ -41,8 +37,8 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     //cách 1
-    public ResponseEntity<?> getUserId(@PathVariable long id){
-        return  userService.finaById(id);
+    public ResponseEntity<?> getUserId(@PathVariable long id) {
+        return userService.finaById(id);
     }
     //cách 2
 //    public ReponseData getUserId(@PathVariable long id) {

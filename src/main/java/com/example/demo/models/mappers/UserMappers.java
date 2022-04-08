@@ -3,7 +3,9 @@ package com.example.demo.models.mappers;
 import com.example.demo.entitys.UserEntity;
 import com.example.demo.models.dto.UserDto;
 import com.example.demo.models.ins.UserIn;
+import com.example.demo.provider.JwtLogin;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,14 @@ public class UserMappers {
 
     public static void main(String[] args) {
         SpringApplication.run(UserMappers.class, args);
+    }
+
+    public UserEntity loginMapper(UserEntity userEntity, UserDto userDto){
+        userDto.setId(userEntity.getId());
+        userDto.setName(userEntity.getName());
+        userDto.setEmail(userEntity.getEmail());
+        userDto.setAge(userEntity.getAge());
+        return userEntity;
     }
 
     public static UserIn userToPrincipal(UserEntity userEntity) {

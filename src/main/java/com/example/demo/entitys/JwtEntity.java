@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-public class Tbl_Jwt {
+public class JwtEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -16,7 +16,7 @@ public class Tbl_Jwt {
     @Column(name = "status")
     private String status;
 
-    public Tbl_Jwt() {
+    public JwtEntity() {
     }
 
     public long getId() {
