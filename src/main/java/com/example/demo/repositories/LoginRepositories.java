@@ -9,4 +9,8 @@ public interface LoginRepositories extends JpaRepository<UserEntity, Long> {
     UserEntity findFirstByName(String name);
 
     UserEntity findById(long tokenId);
+
+    Boolean existsByName(String name);
+
+    Boolean existsByEmail(String email);
 }

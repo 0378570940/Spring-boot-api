@@ -1,14 +1,16 @@
 package com.example.demo.services;
 
 import com.example.demo.entitys.UserEntity;
+import com.example.demo.mappers.LoginMappers;
 import com.example.demo.models.bo.ResultBo;
 import com.example.demo.models.dto.ReponseData;
 import com.example.demo.models.dto.UserDto;
 import com.example.demo.models.ins.LoginIn;
-import com.example.demo.models.mappers.LoginMappers;
+import com.example.demo.models.out.SignUpOut;
 import com.example.demo.models.out.UserLoginOut;
 import com.example.demo.provider.JwtLogin;
 import com.example.demo.repositories.LoginRepositories;
+import com.example.demo.repositories.SignUpRepositories;
 import com.mysql.cj.exceptions.PasswordExpiredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,8 @@ import java.time.format.DateTimeFormatter;
 public class LoginServices {
     @Autowired
     private LoginRepositories loginRepositories;
+    @Autowired
+    private SignUpRepositories signUpRepositories;
     @Autowired
     private JwtLogin jwtLogin;
     @Autowired
@@ -43,24 +47,30 @@ public class LoginServices {
         return userDto;
     }
 
-    public ResponseEntity<?> getUser(String token) {
-        long userId = Long.parseLong(jwtLogin.parseToken(token));
-        UserEntity userEntity = loginRepositories.findById(userId);
-        UserLoginOut userLoginOut = new UserLoginOut();
-        loginMapper.tokenId(userEntity, userLoginOut);
-        return new ResponseEntity<>(userLoginOut, HttpStatus.OK);
+    public ResponseEntity<?> signUp(UserEntity userEntity) {
+        if (loginRepositories.existsByName(userEntity.getName())) {
+            return new ResponseEntity<>("Tên người dùng đã được sử dụng!", HttpStatus.BAD_REQUEST);
+        }
+        if (loginRepositories.existsByEmail(userEntity.getEmail())) {
+            return new ResponseEntity<>("Email này đã được sử!", HttpStatus.BAD_REQUEST);
+        }
+        loginMapper.signUpMapper(signUpRepositories.save(userEntity));
+        SignUpOut signUpOut = new SignUpOut();
+        String token = jwtLogin.generateJwtToken(userEntity);
+        signUpOut.setToken(token);
+        return new ResponseEntity<>("Tạo người dùng thành công", HttpStatus.OK);
     }
 
-    public Object verifyToken(String token) {
-//        UserEntity userEntity = loginRepositories.findById(Long.parseLong(token));
+    public ResponseEntity<?> verifyToken(String token) {
         long userId = Long.parseLong(jwtLogin.parseToken(token));
         UserEntity userEntity = loginRepositories.findById(userId);
         UserLoginOut userLoginOut = new UserLoginOut();
-        if (userEntity == null) return false;
-        if (userEntity.getStatus() == ResultBo.Status.ACTIVE.name()) return false;
-        if (pressedDate().before(userEntity.getExpire_date())) return false;
+        if (userEntity == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (userEntity.getStatus().equals(ResultBo.Status.ACTIVE.name()))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (pressedDate().before(userEntity.getExpire_date())) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         loginMapper.tokenId(userEntity, userLoginOut);
-        return userLoginOut;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private ReponseData pressedDate() {

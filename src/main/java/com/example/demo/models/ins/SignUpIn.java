@@ -3,15 +3,16 @@ package com.example.demo.models.ins;
 public class SignUpIn {
     private String name;
     private String password;
-    private String gmail;
+    private String email;
 
     public SignUpIn() {
     }
 
-    public SignUpIn(String name, String password, String gmail) {
+
+    public SignUpIn(String name, String password, String email) {
         this.name = name;
         this.password = password;
-        this.gmail = gmail;
+        this.email = email;
     }
 
     public String getName() {
@@ -30,11 +31,11 @@ public class SignUpIn {
         this.password = password;
     }
 
-    public String getGmail() {
-        return gmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setGmail(String gmail) {
-        this.gmail = gmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

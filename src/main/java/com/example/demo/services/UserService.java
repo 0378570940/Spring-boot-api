@@ -5,13 +5,16 @@ import com.example.demo.entitys.UserEntity;
 import com.example.demo.models.dto.ReponseData;
 import com.example.demo.models.dto.UserDto;
 import com.example.demo.models.ins.UserIn;
-import com.example.demo.models.mappers.UserMappers;
+import com.example.demo.mappers.UserMappers;
 import com.example.demo.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -25,7 +28,6 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-
     // cập nhật thông tin post
     //cách1
     public ResponseEntity<?> create(UserEntity userEntity) {
@@ -33,18 +35,15 @@ public class UserService {
         return new ResponseEntity<>(userEntity1, HttpStatus.OK);
     }
 
-
     // sâu toàn bộ thông tin get
     //cách1
-//    public ResponseEntity<?> finaAll() {
-//
-//        List<UserEntity> userEntityList = userRepository.findAll();
-//        List<UserDto> userDto = userEntityList.stream()
-//                .map(post -> modelMapper.map(post, UserDto.class))
-//                .collect(Collectors.toList());
-//        return new ResponseEntity<>(userDto, HttpStatus.OK);
-//    }
-
+    public ResponseEntity<?> finaAll() {
+        List<UserEntity> userEntityList = userRepository.findAll();
+        List<UserDto> userDto = userEntityList.stream()
+                .map(post -> modelMapper.map(post, UserDto.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
 
     //lấy thông tin id get
     //cách1

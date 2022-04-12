@@ -1,11 +1,9 @@
-package com.example.demo.models.mappers;
+package com.example.demo.mappers;
 
 import com.example.demo.entitys.UserEntity;
 import com.example.demo.models.dto.UserDto;
 import com.example.demo.models.ins.UserIn;
-import com.example.demo.provider.JwtLogin;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

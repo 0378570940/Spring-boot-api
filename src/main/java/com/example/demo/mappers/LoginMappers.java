@@ -1,10 +1,13 @@
-package com.example.demo.models.mappers;
+package com.example.demo.mappers;
 
 import com.example.demo.entitys.UserEntity;
 import com.example.demo.models.dto.UserDto;
+import com.example.demo.models.out.SignUpOut;
 import com.example.demo.models.out.UserLoginOut;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @SpringBootApplication
@@ -34,5 +37,21 @@ public class LoginMappers {
         userInOut.setSDT(userEntity.getSDT());
         userInOut.setWork(userEntity.getWork());
         return userInOut;
+    }
+
+    public UserEntity signUpMapper(UserEntity userEntity) {
+        SignUpOut signUpOut = new SignUpOut();
+        signUpOut.setName(userEntity.getName());
+        signUpOut.setEmail(userEntity.getEmail());
+        signUpOut.setPassword(userEntity.getPassWord());
+        signUpOut.setInterest(userEntity.getInterest());
+        signUpOut.setDriver(userEntity.getDriver());
+        signUpOut.setHometown(userEntity.getHometown());
+        signUpOut.setFacebook(userEntity.getFacebook());
+        signUpOut.setSDT(userEntity.getSDT());
+        signUpOut.setDateofbirth(userEntity.getDateofbirth());
+        signUpOut.setMaritalstatus(userEntity.getMaritalstatus());
+        signUpOut.setWork(userEntity.getWork());
+        return userEntity;
     }
 }

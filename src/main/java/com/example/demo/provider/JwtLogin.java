@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JwtLogin {
@@ -34,6 +35,10 @@ public class JwtLogin {
 
     public Date expireToken(String token) {
         return Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody().getExpiration();
+    }
+
+    public String generateJwtToken(List<UserEntity> userEntitys) {
+        return null;
     }
 
     private class TokenRefreshException extends Throwable {

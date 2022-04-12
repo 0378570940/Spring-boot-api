@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 @Table(name = "users")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column(name = "age")
     private int age;
@@ -46,7 +46,11 @@ public class UserEntity {
     @Lob
     private byte[] img;
 
+    public UserEntity(String signUpInName, String facebook, String driver, String name, String email, String encode) {
+    }
+
     public UserEntity() {
+
     }
 
     public String getGender() {

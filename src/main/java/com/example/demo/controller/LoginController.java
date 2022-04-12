@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.entitys.UserEntity;
 import com.example.demo.models.ins.LoginIn;
+import com.example.demo.models.ins.SignUpIn;
 import com.example.demo.services.LoginServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +22,8 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<?> getUser(@RequestHeader(name = "Authorization") String token) {
-        return loginServices.getUser(token);
-    }
-
-    @GetMapping("/users")
-    public Object verifyToken(@RequestHeader(name = "Authorization") String token) {
-        return loginServices.verifyToken(token);
+    @PostMapping("signUp")
+    public ResponseEntity<?> signUp(@RequestBody UserEntity userEntity) {
+        return loginServices.signUp(userEntity);
     }
 }
